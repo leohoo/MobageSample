@@ -34,27 +34,48 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import jp.mobage.am.shellapp.sample.BuildConfig;
+import timber.log.Timber;
+
 /**
  * アプリケーションのプロセスに紐付いたクラスです。
- * 
+ *
  * onCreate() にて  RemoteNotification.setRemoteNotificationClient() を呼び出すことで
  * Remote Notification の挙動をカスタマイズすることができます。
  */
 public class GameApplication extends Application {
     protected static final String TAG = "GameApplication";
-    
+
     private static GameApplication sInstance;
-    
+
     public GameApplication() {
         sInstance = this;
     }
-    
+
     public static GameApplication getInstance() {
         return sInstance;
     }
 
     @Override
     public void onCreate() {
+        super.onCreate();
+
+        // chrome://inspect
+        if (android.os.Build.VERSION.SDK_INT >= 19 /*Build.VERSION_CODES.KITKAT*/) {
+            if (BuildConfig.DEBUG) {
+    /* WebView.setWebContentsDebuggingEnabled(true); */
+                try {
+                    java.lang.reflect.Method m =
+                            android.webkit.WebView.class.getMethod("setWebContentsDebuggingEnabled", boolean.class);
+                    m.invoke(null, true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Timber.plant(new Timber.DebugTree());
+            }
+        }
+
         RemoteNotification.setRemoteNotificationClient(new RemoteNotificationClient() {
             /**
              * アプリの Activity を含んだプロセスが起動していない場合でも、このメソッドで Remote Notification を
@@ -71,10 +92,10 @@ public class GameApplication extends Application {
                 Log.i(TAG, "Received Remote Notification: " + payload);
                 return false;    // ここで true を返した場合、デフォルトのステータスバー通知や setRemoteNotificationListener() にて設定したリスナーの呼び出しは行われません。
             }
-            
+
             /**
              * Remote Notification のステータスバー通知をカスタマイズすることができます。
-             * 
+             *
              * @param notification SDK が生成し、これから表示しようとする Notification インスタンス。
              * @param context Remote Notification 受信サービスが動作している context。
              * @param intent 受信した intent。

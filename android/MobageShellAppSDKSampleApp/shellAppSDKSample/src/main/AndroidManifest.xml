@@ -35,7 +35,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="mobage-client" android:host="${MobageApplicationId}-16" />
+                <data android:scheme="mobage-client" android:host="12024239-16" />
             </intent-filter>
         </activity>
 

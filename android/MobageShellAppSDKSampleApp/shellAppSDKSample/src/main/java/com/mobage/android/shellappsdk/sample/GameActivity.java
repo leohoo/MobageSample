@@ -78,8 +78,9 @@ public class GameActivity extends Activity {
         mMobageContext = MobageContext.getInstance(this);
         // Embedded Key/Embedded Secret を設定します。Sandbox用と本番用で値が異なります。
         // Embedded Key/Embedded Secret は独自ロジックで暗号化することをお勧めします。
-        mMobageContext.setClientCredentials("_EMBEDDED_KEY_", "_EMBEDDED_SECRET_");
-        
+        mMobageContext.setClientCredentials("716d4c95-bf78-4f2b-9246-62cb77abcf00", "o4xz46PA9ACUYlBxPWnYZeDV");
+//        mMobageContext.setClientCredentials("77746fca-627d-40e0-b3ce-68f2a336e37e", "xqHMP7zi3pomuJV8488skKTP");
+
         // WebView を初期化します。
         mWebView = (GameWebView)findViewById(Res.id("webView"));
         setupWebView(mWebView);

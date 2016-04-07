@@ -43,6 +43,8 @@ import com.mobage.android.shellappsdk.webkit.MobageWebChromeClient;
 import com.mobage.android.shellappsdk.webkit.MobageWebView;
 import com.mobage.android.shellappsdk.webkit.MobageWebViewClient;
 
+import timber.log.Timber;
+
 /**
  * MobageWebView を継承した、ゲームコンテンツ用の WebView です。
  * 
@@ -226,6 +228,8 @@ public class GameWebView extends MobageWebView {
     private class MyWebViewClient extends MobageWebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView webView, String url) {
+            Timber.d("url: %s", url);
+
             boolean handled = super.shouldOverrideUrlLoading(webView, url);
             if (handled) {
                 return true;
